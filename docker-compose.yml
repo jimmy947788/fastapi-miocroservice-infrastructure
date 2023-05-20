@@ -64,6 +64,7 @@ services:
     depends_on:
       - mysqldb
     container_name: config-server
+    hostname: config-server
     image: "${REGISTRY:-docker.io}/${IMAGE_NAME:-hyness/spring-cloud-config-server}:${TAG:-latest}"
     ports:
       - "8888:8888"
@@ -73,3 +74,18 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mariadb://mysql.local:3306/cloud_config
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root123
+
+  client-service:
+    image: client-service:latest
+    build:
+      context: ./client-service
+      dockerfile: Dockerfile
+    container_name: client-service.local
+    hostname: client-service.local
+    ports:
+      - "8080:80"
+    environment:
+      CONFIGSERVER_ADDRESS: http://config-server:8888
+      APP_NAME: api
+      LABEL: latest
+      PROFILE: dev
