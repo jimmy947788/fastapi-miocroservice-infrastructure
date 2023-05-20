@@ -1,0 +1,75 @@
+version: '3.1'
+
+services:
+
+  mysqldb:
+    image: mysql:8.0
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    container_name: mysql.local
+    hostname: mysql.local
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: daedalus
+      MYSQL_USER: techteam
+      MYSQL_PASSWORD: 123456Aa@
+      MYSQL_ROOT_HOST: '%'
+
+    volumes:
+      - ./mysqldb/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysqldb/data:/var/lib/mysql
+      - ./mysqldb/conf:/etc/mysql/conf.d
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    container_name: rabbitmq.local
+    hostname: rabbitmq.local
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq
+
+  redis:
+    image: redis:alpine
+    command: redis-server --requirepass 12345 --save 60 1
+    container_name: redisdb.local
+    hostname: redisdb.local
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redisdb/data:/data
+
+  flower:
+    image: mher/flower:latest
+    ports:
+      - 5555:5555
+    environment:
+      CELERY_BROKER_URL: amqp://admin:admin@rabbitmq.local:5672//
+      CELERY_RESULT_BACKEND: redis://:12345@redisdb.local:6379
+    depends_on:
+      - rabbitmq
+      - redis
+  config-server:
+    depends_on:
+      - mysqldb
+    container_name: config-server
+    image: "${REGISTRY:-docker.io}/${IMAGE_NAME:-hyness/spring-cloud-config-server}:${TAG:-latest}"
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING_PROFILES_ACTIVE: jdbc
+      SPRING_CLOUD_CONFIG_SERVER_JDBC_SQL: SELECT `KEY`, VALUE from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mysql.local:3306/cloud_config
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root123
