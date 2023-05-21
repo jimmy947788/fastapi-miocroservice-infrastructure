@@ -89,3 +89,42 @@ services:
       APP_NAME: api
       LABEL: latest
       PROFILE: dev
+  # auth-server:
+  #   image: auth-server:latest
+  #   build:
+  #     context: ./auth-Server
+  #     dockerfile: dockerfile
+  #   container_name: auth-server.local
+  #   hostname: auth-server.local
+  #   ports:
+  #     - "8060:8060"
+  #   environment:
+  #     CONFIGSERVER_ADDRESS: http://config-server:8888
+  #     APP_NAME: api
+  #     LABEL: latest
+  #     PROFILE: dev
+  easyauth:
+    image: joshjamison/easyauth:v0.0.1
+    container_name: easyauth.local
+    hostname: easyauth.local
+    ports:
+      - "8220:8220"
+    volumes:
+      - ./easyauth:/mnt/easyauth
+    environment:
+      DB_TYPE: mysql
+      DB_NAME: auth
+      DB_HOST: mysql.local
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root123
+      DB_LOCAL_PATH: /mnt/easyauth
+      ISSUER: EasyAuth
+      SUBJECT: EasyAuthAuth
+      AUDIENCE: EasyAuthApis
+      KEY_PATH: /mnt/easyauth
+      KEY_NAME: test_key
+      AUTH_SECRET: my-secret
+      ADMIN_PREFIX: "/admin"
+      ADMIN_TITLE: "EasyAuth - Example"
+      AUTH_WORKERS: 1

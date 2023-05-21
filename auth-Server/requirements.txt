@@ -1,0 +1,8 @@
+fastapi==0.95.2
+uvicorn==0.12.2
+config-client==1.3.0
+easy-auth[server]
+mysqlclient==2.1.1
+uvloop==0.17.0
+aiomysql==0.1.1
+asyncio==3.4.3

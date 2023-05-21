@@ -1,0 +1,22 @@
+FROM python:3.9-slim-buster
+
+ENV APP_NAME=api
+ENV LABEL=latest
+
+RUN apt update -y && \
+    apt install -y uvicorn python3-dev default-libmysqlclient-dev build-essential 
+
+RUN pip install mysqlclient
+
+WORKDIR /code
+
+COPY ./requirements.txt /code/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+COPY ./app /code/app
+COPY ./server_env.json /code/server_env.json
+
+RUN mkdir -p /code/key
+
+CMD ["uvicorn", "app.main:server", "--host", "0.0.0.0", "--port", "8060 "]

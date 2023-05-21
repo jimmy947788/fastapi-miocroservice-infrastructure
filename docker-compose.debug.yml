@@ -1,0 +1,7 @@
+version: '3.1'
+
+services:
+
+  auth-server:
+    volumes:
+      - ./auth-server/app:/code/app
