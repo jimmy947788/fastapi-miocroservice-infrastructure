@@ -76,6 +76,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: root123
 
   app1-service:
+    # 可以吃到config server的設定，也可走easyauth的驗證
     image: app1-service:latest
     build:
       context: ./app1-service
@@ -89,21 +90,23 @@ services:
       APP_NAME: app1
       LABEL: latest
       PROFILE: dev
-  # auth-server:
-  #   image: auth-server:latest
-  #   build:
-  #     context: ./auth-Server
-  #     dockerfile: dockerfile
-  #   container_name: auth-server.local
-  #   hostname: auth-server.local
-  #   ports:
-  #     - "8060:8060"
-  #   environment:
-  #     CONFIGSERVER_ADDRESS: http://config-server:8888
-  #     APP_NAME: api
-  #     LABEL: latest
-  #     PROFILE: dev
+  auth-server:
+    # 用fastapi配合easyauth套件來實作驗證服務
+    image: auth-server:latest
+    build:
+      context: ./auth-Server
+      dockerfile: dockerfile
+    container_name: auth-server.local
+    hostname: auth-server.local
+    ports:
+      - "8060:8060"
+    environment:
+      CONFIGSERVER_ADDRESS: http://config-server:8888
+      APP_NAME: api
+      LABEL: latest
+      PROFILE: dev
   easyauth:
+    # 用打包好的easyauth docker image來架設
     image: joshjamison/easyauth:2.0.1
     container_name: easyauth.local
     hostname: easyauth.local

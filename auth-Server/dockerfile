@@ -8,15 +8,15 @@ RUN apt update -y && \
 
 RUN pip install mysqlclient
 
-WORKDIR /code
+WORKDIR /app
 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt ./requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r  ./requirements.txt
 
-COPY ./app /code/app
-COPY ./server_env.json /code/server_env.json
+COPY ./app ./
+COPY ./server_env.json ./server_env.json
 
-RUN mkdir -p /code/key
+RUN mkdir -p /keys
 
-CMD ["uvicorn", "app.main:server", "--host", "0.0.0.0", "--port", "8060 "]
+CMD ["uvicorn", "main:server", "--host", "0.0.0.0", "--port", "8060 "]

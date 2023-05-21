@@ -8,6 +8,6 @@
     "ISSUER": "EasyAuth",
     "SUBJECT": "EasyAuthAuth",
     "AUDIENCE": "EasyAuthApis",
-    "KEY_PATH": "/code/key",
+    "KEY_PATH": "/keys",
     "KEY_NAME": "auth_key"
 }
