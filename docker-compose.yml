@@ -96,6 +96,7 @@ services:
     build:
       context: ./auth-Server
       dockerfile: dockerfile
+      target: run-stage
     container_name: auth-server.local
     hostname: auth-server.local
     ports:
