@@ -1,7 +1,7 @@
 fastapi==0.95.2
 uvicorn==0.12.2
 config-client==1.3.0
-easy-auth[server]
+easy-auth[server]==2.0.1
 mysqlclient==2.1.1
 uvloop==0.17.0
 aiomysql==0.1.1

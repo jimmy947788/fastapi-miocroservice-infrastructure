@@ -75,18 +75,18 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root123
 
-  client-service:
-    image: client-service:latest
+  app1-service:
+    image: app1-service:latest
     build:
-      context: ./client-service
-      dockerfile: Dockerfile
-    container_name: client-service.local
-    hostname: client-service.local
+      context: ./app1-service
+      dockerfile: dockerfile
+    container_name: app1-service.local
+    hostname: app1-service.local
     ports:
-      - "8080:80"
+      - "8080:8000"
     environment:
       CONFIGSERVER_ADDRESS: http://config-server:8888
-      APP_NAME: api
+      APP_NAME: app1
       LABEL: latest
       PROFILE: dev
   # auth-server:

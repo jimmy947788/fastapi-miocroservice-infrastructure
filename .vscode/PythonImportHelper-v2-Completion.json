@@ -1,0 +1,203 @@
+[
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "EasyAuthServer",
+        "importPath": "easyauth.server",
+        "description": "easyauth.server",
+        "isExtraImport": true,
+        "detail": "easyauth.server",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigClient",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigClient",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigClient",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "fastapi_config_client",
+        "importPath": "config.ext.fastapi",
+        "description": "config.ext.fastapi",
+        "isExtraImport": true,
+        "detail": "config.ext.fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "fastapi_config_client",
+        "importPath": "config.ext.fastapi",
+        "description": "config.ext.fastapi",
+        "isExtraImport": true,
+        "detail": "config.ext.fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "config.logger",
+        "description": "config.logger",
+        "isExtraImport": true,
+        "detail": "config.logger",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "config.logger",
+        "description": "config.logger",
+        "isExtraImport": true,
+        "detail": "config.logger",
+        "documentation": {}
+    },
+    {
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "server",
+        "kind": 5,
+        "importPath": "auth-Server.app.main",
+        "description": "auth-Server.app.main",
+        "peekOfCode": "server = FastAPI(dependencies=[Depends(fastapi_config_client)])\nserver.auth = EasyAuthServer.create(\n    server,\n    '/auth/token',\n    auth_secret='abcd1234',\n    admin_title='EasyAuth - Company',\n    admin_prefix='/admin',\n    env_from_file='server_env.json'\n)",
+        "detail": "auth-Server.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "server.auth",
+        "kind": 5,
+        "importPath": "auth-Server.app.main",
+        "description": "auth-Server.app.main",
+        "peekOfCode": "server.auth = EasyAuthServer.create(\n    server,\n    '/auth/token',\n    auth_secret='abcd1234',\n    admin_title='EasyAuth - Company',\n    admin_prefix='/admin',\n    env_from_file='server_env.json'\n)",
+        "detail": "auth-Server.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "client-service.app.main",
+        "description": "client-service.app.main",
+        "peekOfCode": "def home():\n    return \"\"\"\n    <html>\n      <body>\n      <p>config-client | FastAPI integration</p>\n      <p>sample endpoints</p>\n      <ul>\n        <li>/config/<my.property></li>\n        <ul>\n          <li><a href=\"http://localhost:8000/config/spring\">/config/spring</a></li>",
+        "detail": "client-service.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "consul",
+        "kind": 2,
+        "importPath": "client-service.app.main",
+        "description": "client-service.app.main",
+        "peekOfCode": "def consul(request: Request):\n    return dict(\n        description=request.app.config_client.get(\"info.app.description\"),\n        url=request.app.config_client.get(\"info.app.name\"),\n    )\n@app.get(\"/config/{config_key}\")\ndef config(request: Request, config_key):\n    return request.app.config_client.get(f\"{config_key}\", {\"message\": \"not found\"})",
+        "detail": "client-service.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 2,
+        "importPath": "client-service.app.main",
+        "description": "client-service.app.main",
+        "peekOfCode": "def config(request: Request, config_key):\n    return request.app.config_client.get(f\"{config_key}\", {\"message\": \"not found\"})",
+        "detail": "client-service.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "client-service.app.main",
+        "description": "client-service.app.main",
+        "peekOfCode": "app = FastAPI(dependencies=[Depends(fastapi_config_client)])\n@app.get(\"/\", response_class=HTMLResponse)\ndef home():\n    return \"\"\"\n    <html>\n      <body>\n      <p>config-client | FastAPI integration</p>\n      <p>sample endpoints</p>\n      <ul>\n        <li>/config/<my.property></li>",
+        "detail": "client-service.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "cc",
+        "kind": 5,
+        "importPath": "clientapp",
+        "description": "clientapp",
+        "peekOfCode": "cc = ConfigClient(app_name='api', label='latest',\n                  address='http://localhost:8888', profile='dev')\ncc.get_config()\naaa = cc.get('aaa')\nprint(f\"aaa: {aaa}\")",
+        "detail": "clientapp",
+        "documentation": {}
+    },
+    {
+        "label": "aaa",
+        "kind": 5,
+        "importPath": "clientapp",
+        "description": "clientapp",
+        "peekOfCode": "aaa = cc.get('aaa')\nprint(f\"aaa: {aaa}\")",
+        "detail": "clientapp",
+        "documentation": {}
+    }
+]
