@@ -104,7 +104,7 @@ services:
   #     LABEL: latest
   #     PROFILE: dev
   easyauth:
-    image: joshjamison/easyauth:v0.0.1
+    image: joshjamison/easyauth:2.0.1
     container_name: easyauth.local
     hostname: easyauth.local
     ports:
@@ -124,7 +124,7 @@ services:
       AUDIENCE: EasyAuthApis
       KEY_PATH: /mnt/easyauth
       KEY_NAME: test_key
-      AUTH_SECRET: my-secret
+      AUTH_SECRET: abcd1234
       ADMIN_PREFIX: "/admin"
       ADMIN_TITLE: "EasyAuth - Example"
       AUTH_WORKERS: 1
