@@ -1,24 +1,45 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Run docker-compose up",
-            "type": "docker-compose",
-            "dockerCompose": {
-                "up": {
-                    "detached": true,
-                    "build": true
-                },
-                "files": [
-                    "${workspaceFolder}/docker-compose.yml",
-                    "${workspaceFolder}/docker-compose.debug.yml"
-                ]
-            },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+  "version": "2.0.0",
+  "options": {
+    "env": {
+      "HOST_UID": "$(id -u)",
+      "HOST_GID": "$(id -g)"
+    },
+    "shell": {
+      "executable": "/bin/bash",
+      "args": ["-c"]
+    }
+  },
+  "tasks": [
+    {
+      "label": "Run docker-compose up",
+      "type": "docker-compose",
+      "dockerCompose": {
+        "up": {
+          "detached": true,
+          "build": true
+        },
+        "files": [
+          "${workspaceFolder}/docker-compose.yml",
+          "${workspaceFolder}/docker-compose.debug.yml"
+        ],
+        "env": {
+          "HOST_UID": "${env.HOST_UID}",
+          "HOST_GID": "${env.HOST_GID}"
         }
-    ]
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": ["get user id", "get group id"]
+    },
+    {
+      "label": "test env",
+      "type": "shell",
+      "command": "echo",
+      "args": ["${env:HOST_UID}", "${env:HOST_GID}"]
+    }
+  ]
 }

@@ -1,7 +1,26 @@
-FROM python:3.9-slim-buster as builder
+FROM python:3.10-slim-buster as builder
+
+ARG UID
+ARG GID
+
+RUN echo "UID=$UID, GID=$GID"
+
+# Update the package list, install sudo, create a non-root user, and grant password-less sudo permissions
+RUN apt update && \
+    apt install -y sudo && \
+    addgroup --gid $GID nonroot && \
+    adduser --uid $UID --gid $GID --disabled-password --gecos "" nonroot && \
+    echo 'nonroot ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+# set time zone
+ENV TZ=Asia/Taipei
 
 RUN apt update -y && \
-    apt install -y uvicorn python3-dev default-libmysqlclient-dev build-essential 
+    apt install -y uvicorn \
+    python3-dev \
+    default-libmysqlclient-dev \
+    build-essential \
+    tzdata
 
 RUN pip install mysqlclient
 
@@ -9,14 +28,19 @@ COPY ./requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r  ./requirements.txt
 
+################################
+#      run time stage          #
+################################
 FROM builder as run-stage
 
 WORKDIR /app
-
 
 COPY ./app ./
 COPY ./server_env.json ./server_env.json
 
 RUN mkdir -p /keys
+
+RUN chown -R nonroot:nonroot /app
+USER nonroot
 
 CMD ["uvicorn", "main:server", "--host", "0.0.0.0", "--port", "8060"]

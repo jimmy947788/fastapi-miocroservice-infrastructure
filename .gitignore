@@ -162,3 +162,5 @@ cython_debug/
 mysqldb/data/
 rabbitmq/data/
 redisdb/data/
+
+.history/

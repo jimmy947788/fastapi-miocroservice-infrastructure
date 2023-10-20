@@ -83,6 +83,9 @@ services:
     build:
       context: ./app1-service
       dockerfile: dockerfile
+      args:
+        UID: ${HOST_UID}
+        GID: ${HOST_GID}
     container_name: app1-service.local
     hostname: app1-service.local
     ports:
@@ -98,6 +101,9 @@ services:
     build:
       context: ./auth-Server
       dockerfile: dockerfile
+      args:
+        UID: ${HOST_UID}
+        GID: ${HOST_GID}
       target: run-stage
     container_name: auth-server.local
     hostname: auth-server.local
